@@ -2,6 +2,7 @@
 
 buildscript {
     ext {
+        RNNKotlinVersion = "1.7.10"
         buildToolsVersion = "33.0.0"
         minSdkVersion = 21
         compileSdkVersion = 33
@@ -11,10 +12,22 @@ buildscript {
         ndkVersion = "23.1.7779620"
     }
     repositories {
-        google()
-        mavenCentral()
+        // google()
+        // mavenCentral()
+         maven {
+        url 'https://maven.google.com/'
+        name 'Google'
+    }
+    jcenter()
+    google()
+    maven {
+        url 'https://mvnrepository.com/artifact/com.android.tools.lint/lint-gradle-api'
+    }
+        
+        
     }
     dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$RNNKotlinVersion"
         classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
     }
