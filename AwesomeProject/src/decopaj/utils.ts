@@ -80,11 +80,11 @@ export const Data_Key = 'data';
 //   } catch (e) {}
 // };
 
-// export const guid = () => {
-//   var w = () => {
-//     return Math.floor((1 + Math.random()) * 0x10000)
-//       .toString(16)
-//       .substring(1);
-//   };
-//   return `${w()}${w()}-${w()}-${w()}-${w()}-${w()}${w()}${w()}`;
-// };
+export const guid = () => {
+  var w = () => {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  };
+  return `${w()}${w()}-${w()}-${w()}-${w()}-${w()}${w()}${w()}`;
+};

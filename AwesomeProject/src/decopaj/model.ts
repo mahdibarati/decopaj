@@ -21,6 +21,8 @@ export const getCameraType = (name: string) => {
       return 5;
     case 'خیلی نزدیک':
       return 6;
+    default:
+      return 0;
   }
 };
 

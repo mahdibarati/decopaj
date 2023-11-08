@@ -1,98 +1,127 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useState} from 'react';
 import {useEffect} from 'react';
-import {Button, Text, View} from 'react-native';
+import {Alert, BackHandler, Button, Text, View} from 'react-native';
 import {colors} from './colors';
 import {Navigation} from 'react-native-navigation';
-
-export const DecopajScreen = (props: {componentId: string}) => {
-  // const [openAddPlan, setOpenAddPan] = useState(false);
-  // const [list, setList] = useState<[] | undefined>();
-
+import {deleteData, getStoreData} from './db';
+import {Box, Divider, Icon} from '@gluestack-ui/themed';
+import {getPersianDigitString} from './utils';
+import {AddPlanDialog} from './add-plan-dialog';
+export const DecopajScreen = (props: {
+  navigation: any;
+  componentId: string;
+}) => {
+  const [openAddPlan, setOpenAddPan] = useState(false);
+  const [list, setList] = useState<[] | undefined>();
+  const {navigation} = props;
   useEffect(() => {
-    handleInitDB();
+    refrshList();
   }, []);
 
-  const handleInitDB = async () => {
-    // initDB().then(() => {
-    //   refrshList();
-    // });
-    // setIsDBReady(status);
-  };
-  // const refrshList = () => {
-  //   getStoreData(Stores.Plans).then((ls: any) => {
-  //     setList(ls);
-  //   });
-  // };
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert('Hold on!', 'Are you sure you want to go back?', [
+        {
+          text: 'Cancel',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {text: 'YES', onPress: () => BackHandler.exitApp()},
+      ]);
+      return true;
+    };
 
-  // const getList = () => {
-  //   if (list) {
-  //     return list.map((item: any, index: number) => {
-  //       return (
-  //         <View key={'p-' + index} sx={{position: 'relative', float: 'left'}}>
-  //           <Text
-  //             variant="caption"
-  //             sx={{
-  //               position: 'absolute',
-  //               left: 24,
-  //               top: 8,
-  //               borderRadius: 1,
-  //               border: '1px solid #aaa',
-  //               backgroundColor: theme => theme.palette.primary.main,
-  //               width: 30,
-  //               height: 17,
-  //               color: 'white',
-  //             }}>
-  //             {getPersianDigitString(index + 1)}
-  //           </Text>
-  //           <View
-  //             sx={{
-  //               maxWidth: 'fit-content',
-  //               margin: 2,
-  //               ViewShadow: 'none',
-  //               border: theme => '1px solid ' + theme.palette.primary.main,
-  //             }}>
-  //             <View sx={{padding: '8px !important'}}>
-  //               <View paddingTop={1}>
-  //                 <View
-  //                   display="flex"
-  //                   justifyContent="space-between"
-  //                   mb={1}
-  //                   mt={1}
-  //                   gap={3}>
-  //                   <Text variant="caption">نوع دوربین</Text>
-  //                   <Text>{getPersianDigitString(item.cameraTypeName)}</Text>
-  //                 </View>
-  //                 <Divider />
-  //                 <View
-  //                   display="flex"
-  //                   justifyContent="space-between"
-  //                   mt={1}
-  //                   gap={13}>
-  //                   <Text variant="caption">تعداد بازیگر</Text>
-  //                   <Text>{getPersianDigitString(item.count)}</Text>
-  //                 </View>
-  //                 <IconButton
-  //                   aria-label="close"
-  //                   onClick={() => {
-  //                     //deletePlan(index);
-  //                     deleteData(Stores.Plans, item.id).then(() => {
-  //                       refrshList();
-  //                     });
-  //                   }}
-  //                   sx={{
-  //                     color: theme => theme.palette.grey[500],
-  //                   }}>
-  //                   <DeleteIcon />
-  //                 </IconButton>
-  //               </View>
-  //             </View>
-  //           </View>
-  //         </View>
-  //       );
-  //     });
-  //   }
-  // };
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
+  const refrshList = () => {
+    // Alert.alert('1');
+    getStoreData().then(ls => {
+      if (ls) setList(ls);
+    });
+
+    //if (ls) setList(ls);
+    // .then((ls: any) => {
+    //   setList(ls);
+    // });
+  };
+
+  const getList = () => {
+    if (list) {
+      return list.map((item: any, index: number) => {
+        return (
+          <Box
+            key={'p-' + index}
+            style={{position: 'relative', paddingTop: 4, marginTop: 4}}>
+            <Box
+              style={{
+                // maxWidth: 'fit-content',
+                margin: 2,
+                // ViewShadow: 'none',
+                borderColor: colors.primary,
+                borderWidth: 1,
+                borderRadius: 8,
+              }}>
+              <View>
+                <Box paddingHorizontal={8} paddingVertical={16} gap={5}>
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    flexDirection="row"
+                    mt={1}
+                    gap={3}>
+                    <Text>{getPersianDigitString(item.cameraTypeName)}</Text>
+                    <Text>نوع دوربین</Text>
+                  </Box>
+                  <Divider />
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    flexDirection="row"
+                    mt={1}
+                    gap={13}>
+                    <Text>{getPersianDigitString(item.count)}</Text>
+                    <Text>تعداد بازیگر</Text>
+                  </Box>
+                  <Button
+                    title="حذف"
+                    onPress={() => {
+                      //deletePlan(index);
+                      deleteData(item.id).then(() => {
+                        refrshList();
+                      });
+                    }}
+                    color={'red'}
+                  />
+                </Box>
+              </View>
+            </Box>
+            <Text
+              style={{
+                position: 'absolute',
+                left: 8,
+                top: 0,
+                borderRadius: 5,
+                // border: '1px solid #aaa',
+                backgroundColor: colors.primary,
+                width: 30,
+                height: 17,
+                color: 'white',
+                textAlign: 'center',
+              }}>
+              {getPersianDigitString(index + 1)}
+            </Text>
+          </Box>
+        );
+      });
+    }
+  };
 
   return (
     <View style={{padding: 8}}>
@@ -105,9 +134,9 @@ export const DecopajScreen = (props: {componentId: string}) => {
               title="افزودن پلان"
               color="#841584"
               // onPress={() => {
-              // setOpenAddPan(true);
+              //   //setOpenAddPan(true);
               // }}
-              onPress={() =>
+              onPress={() => {
                 Navigation.push(props.componentId, {
                   component: {
                     name: 'AddPlanSceen',
@@ -119,18 +148,18 @@ export const DecopajScreen = (props: {componentId: string}) => {
                       },
                     },
                   },
-                })
-              }
+                });
+              }}
             />
 
-            {/* <AddPlan
+            {/* <AddPlanDialog
               open={openAddPlan}
               onClose={() => {
                 setOpenAddPan(false);
                 refrshList();
               }}>
               sdsdss
-            </AddPlan> */}
+            </AddPlanDialog> */}
           </View>
           <View>
             <Text
@@ -142,7 +171,7 @@ export const DecopajScreen = (props: {componentId: string}) => {
               }}>
               لیست پلان ها
             </Text>
-            {/* <View>{getList()}</View> */}
+            <View>{getList()}</View>
           </View>
         </View>
       </View>
