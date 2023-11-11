@@ -1,13 +1,28 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {useEffect} from 'react';
-import {Alert, BackHandler, Button, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import {colors} from './colors';
-import {Navigation} from 'react-native-navigation';
 import {deleteData, getStoreData} from './db';
-import {Box, Divider, Icon} from '@gluestack-ui/themed';
+import {
+  AddIcon,
+  Box,
+  Button,
+  ButtonIcon,
+  ButtonText,
+  Divider,
+  EditIcon,
+  GluestackUIProvider,
+  RemoveIcon,
+  ScrollView,
+  TrashIcon,
+} from '@gluestack-ui/themed';
 import {getPersianDigitString} from './utils';
 import {AddPlanDialog} from './add-plan-dialog';
+import {config} from '@gluestack-ui/config';
+import {Alert} from 'react-native';
+import {DeleteIcon} from 'lucide-react-native';
+
 export const DecopajScreen = (props: {
   navigation: any;
   componentId: string;
@@ -17,27 +32,6 @@ export const DecopajScreen = (props: {
   const {navigation} = props;
   useEffect(() => {
     refrshList();
-  }, []);
-
-  useEffect(() => {
-    const backAction = () => {
-      Alert.alert('Hold on!', 'Are you sure you want to go back?', [
-        {
-          text: 'Cancel',
-          onPress: () => null,
-          style: 'cancel',
-        },
-        {text: 'YES', onPress: () => BackHandler.exitApp()},
-      ]);
-      return true;
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
-    );
-
-    return () => backHandler.remove();
   }, []);
 
   const refrshList = () => {
@@ -90,15 +84,19 @@ export const DecopajScreen = (props: {
                     <Text>تعداد بازیگر</Text>
                   </Box>
                   <Button
-                    title="حذف"
+                    borderRadius="$full"
+                    size="md"
+                    bg={colors.error}
+                    width={10}
                     onPress={() => {
                       //deletePlan(index);
                       deleteData(item.id).then(() => {
                         refrshList();
                       });
-                    }}
-                    color={'red'}
-                  />
+                    }}>
+                    {/* EditIcon is imported from 'lucide-react-native' */}
+                    <ButtonIcon as={TrashIcon} />
+                  </Button>
                 </Box>
               </View>
             </Box>
@@ -124,15 +122,18 @@ export const DecopajScreen = (props: {
   };
 
   return (
-    <View style={{padding: 8}}>
-      <View>
-        {/* <Appbar title="دکوپاژ" /> */}
-
+    <GluestackUIProvider config={config}>
+      <View style={{padding: 8, height: '100%'}}>
         <View>
           <View>
-            <Button
-              title="افزودن پلان"
-              color="#841584"
+            {/* <Button
+              borderRadius="$full"
+              size="lg"
+              p="$3.5"
+              bg="red"
+              borderColor="blue"
+              height={20}
+              width={20}
               onPress={() => {
                 setOpenAddPan(true);
               }}
@@ -151,7 +152,10 @@ export const DecopajScreen = (props: {
               //   //   },
               //   // });
               // }}
-            />
+            >
+               <ButtonText>افزودن پلان</ButtonText> 
+              <ButtonIcon as={AddIcon} color="blue" size="md" />
+            </Button> */}
 
             <AddPlanDialog
               open={openAddPlan}
@@ -160,20 +164,37 @@ export const DecopajScreen = (props: {
                 refrshList();
               }}></AddPlanDialog>
           </View>
-          <View>
-            <Text
-              style={{
-                backgroundColor: colors.secondary,
-                color: 'white',
-                marginTop: 10,
-                padding: 8,
-              }}>
-              لیست پلان ها
-            </Text>
-            <View>{getList()}</View>
-          </View>
+          <ScrollView>
+            <View>
+              <Text
+                style={{
+                  backgroundColor: colors.secondary,
+                  color: 'white',
+                  marginTop: 10,
+                  padding: 8,
+                }}>
+                لیست پلان ها
+              </Text>
+              <View>{getList()}</View>
+            </View>
+          </ScrollView>
         </View>
+        <Button
+          borderRadius="$full"
+          size="lg"
+          //  p="$3.5"
+          position="absolute"
+          bottom={10}
+          right={10}
+          bg={colors.primary}
+          onPress={() => {
+            setOpenAddPan(true);
+          }}>
+          {/* EditIcon is imported from 'lucide-react-native' */}
+          <ButtonText marginRight={10}>افزودن پلان</ButtonText>
+          <ButtonIcon as={AddIcon} />
+        </Button>
       </View>
-    </View>
+    </GluestackUIProvider>
   );
 };

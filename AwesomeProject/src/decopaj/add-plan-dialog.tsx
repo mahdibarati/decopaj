@@ -2,7 +2,7 @@
 import React, {useState} from 'react';
 import {Alert, Button, Pressable, StyleSheet, View} from 'react-native';
 import {Navigation, Modal as RNNModal} from 'react-native-navigation';
-import {Box} from '@gluestack-ui/themed';
+import {Box, Divider} from '@gluestack-ui/themed';
 import {CustomSelect} from '../common/custom-select';
 import {CameraType, getCameraType} from './model';
 import {addData} from './db';
@@ -53,6 +53,7 @@ export const AddPlanDialog = props => {
                   list={Object.values(CameraType)}
                 />
               </Box>
+              <Box bgColor="red" borderColor="red" backgroundColor="red" />
               <Box>
                 <CustomSelect
                   label="تعداد بازیگر"
@@ -72,7 +73,6 @@ export const AddPlanDialog = props => {
                     //   count: count,
                     // });
                     // saveData(guid(), cameraTypeName, cameraType, count);
-                    Alert.alert(cameraTypeName);
                     const id = guid();
                     addData({
                       id,

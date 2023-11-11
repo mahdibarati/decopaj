@@ -27,21 +27,36 @@ export const CustomSelect = (props: {
   const [selected, setSelected] = useState('');
   return (
     <Box display="flex" flexDirection="row" width={'100%'} style={{}}>
-      <Box>
+      <Box
+        flex={2}
+        display="flex"
+        flexDirection="row"
+        flexWrap="wrap"
+        alignContent="flex-end"
+        alignItems="flex-end"
+        alignSelf="flex-end">
         {props.list.map(item => {
           return (
             <Box
               key={'si-' + item}
               borderRadius={4}
-              borderColor={selected === item ? colors.primary : '#aaa'}
+              borderColor={selected === item ? colors.primary : '#bbb'}
+              backgroundColor={selected === item ? colors.primary : '#eee'}
               borderWidth={1}
-              padding={4}
+              paddingHorizontal={8}
+              paddingVertical={4}
+              margin={4}
               marginBottom={4}
+              alignContent="flex-end"
+              alignItems="flex-end"
+              alignSelf="flex-end"
               onTouchStart={() => {
                 setSelected(item);
                 props.onValueChange(item);
               }}>
-              <Text>{getPersianString(item)}</Text>
+              <Text color={selected === item ? 'white' : '#999'}>
+                {getPersianString(item)}
+              </Text>
             </Box>
           );
         })}
