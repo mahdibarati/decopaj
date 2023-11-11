@@ -22,6 +22,16 @@ Navigation.events().registerAppLaunchedListener(() => {
           {
             component: {
               name: 'Home',
+              options: {
+                topBar: {
+                  title: {
+                    text: 'دکوپاژ',
+                    alignment: 'center',
+                    fontWeight: 'bold',
+                    fontFamily: 'bKoodak',
+                  },
+                },
+              },
             },
           },
         ],

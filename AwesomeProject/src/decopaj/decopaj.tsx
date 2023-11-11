@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {useEffect} from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import {colors} from './colors';
 import {deleteData, getStoreData} from './db';
 import {
@@ -15,6 +15,7 @@ import {
   GluestackUIProvider,
   RemoveIcon,
   ScrollView,
+  Text,
   TrashIcon,
 } from '@gluestack-ui/themed';
 import {getPersianDigitString} from './utils';
@@ -70,8 +71,10 @@ export const DecopajScreen = (props: {
                     flexDirection="row"
                     mt={1}
                     gap={3}>
-                    <Text>{getPersianDigitString(item.cameraTypeName)}</Text>
-                    <Text>نوع دوربین</Text>
+                    <Text style={{color: colors.text, fontWeight: 'bold'}}>
+                      {getPersianDigitString(item.cameraTypeName)}
+                    </Text>
+                    <Text style={{color: colors.text}}>نوع دوربین</Text>
                   </Box>
                   <Divider />
                   <Box
@@ -80,8 +83,10 @@ export const DecopajScreen = (props: {
                     flexDirection="row"
                     mt={1}
                     gap={13}>
-                    <Text>{getPersianDigitString(item.count)}</Text>
-                    <Text>تعداد بازیگر</Text>
+                    <Text style={{color: colors.text, fontWeight: 'bold'}}>
+                      {getPersianDigitString(item.count)}
+                    </Text>
+                    <Text style={{color: colors.text}}>تعداد بازیگر</Text>
                   </Box>
                   <Button
                     borderRadius="$full"
