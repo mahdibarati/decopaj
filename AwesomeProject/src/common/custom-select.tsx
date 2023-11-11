@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Box,
   ChevronDownIcon,
@@ -17,51 +17,36 @@ import {
   Text,
 } from '@gluestack-ui/themed';
 import {getPersianString} from '../decopaj/utils';
+import {colors} from '../decopaj/colors';
 
 export const CustomSelect = (props: {
   onValueChange?: any;
   list: string[];
   label: string;
 }) => {
+  const [selected, setSelected] = useState('');
   return (
     <Box display="flex" flexDirection="row" width={'100%'} style={{}}>
-      <Select
-        flex={1}
-        onValueChange={value => {
-          props.onValueChange(value);
-        }}
-        style={{
-          borderColor: 'red',
-          borderWidth: 1,
-          borderRadius: 10,
-          width: '100%',
-          padding: 4,
-        }}>
-        <SelectTrigger size="md" style={{borderColor: 'white'}}>
-          <SelectIcon mr="$3">
-            <Icon as={ChevronDownIcon} />
-          </SelectIcon>
-          <SelectInput placeholder={props.label} mr={5} />
-        </SelectTrigger>
-        <SelectPortal>
-          <SelectBackdrop />
+      <Box>
+        {props.list.map(item => {
+          return (
+            <Box
+              key={'si-' + item}
+              borderRadius={4}
+              borderColor={selected === item ? colors.primary : '#aaa'}
+              borderWidth={1}
+              padding={4}
+              marginBottom={4}
+              onTouchStart={() => {
+                setSelected(item);
+                props.onValueChange(item);
+              }}>
+              <Text>{getPersianString(item)}</Text>
+            </Box>
+          );
+        })}
+      </Box>
 
-          <SelectContent>
-            <SelectDragIndicatorWrapper>
-              <SelectDragIndicator />
-            </SelectDragIndicatorWrapper>
-            {props.list.map(item => {
-              return (
-                <SelectItem
-                  key={'si-' + item}
-                  label={getPersianString(item)}
-                  value={item}
-                />
-              );
-            })}
-          </SelectContent>
-        </SelectPortal>
-      </Select>
       <Text
         flex={1}
         style={{

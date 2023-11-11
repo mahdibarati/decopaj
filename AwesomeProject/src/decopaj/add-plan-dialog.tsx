@@ -54,13 +54,13 @@ export const AddPlanDialog = props => {
                 />
               </Box>
               <Box>
-                {/* <CustomSelect
-                    label="تعداد بازیگر"
-                    onValueChange={(value: string) => {
-                      setCount(value);
-                    }}
-                    list={['1', '2', '3', '4', '5']}
-                  /> */}
+                <CustomSelect
+                  label="تعداد بازیگر"
+                  onValueChange={(value: string) => {
+                    setCount(value);
+                  }}
+                  list={['1', '2', '3', '4', '5']}
+                />
               </Box>
               <View>
                 <Button
@@ -72,6 +72,7 @@ export const AddPlanDialog = props => {
                     //   count: count,
                     // });
                     // saveData(guid(), cameraTypeName, cameraType, count);
+                    Alert.alert(cameraTypeName);
                     const id = guid();
                     addData({
                       id,
@@ -79,6 +80,7 @@ export const AddPlanDialog = props => {
                       cameraType,
                       count,
                     }).then(() => {
+                      props.onClose();
                       Navigation.popToRoot(props.componentId, {});
                     });
                   }}

@@ -133,33 +133,32 @@ export const DecopajScreen = (props: {
             <Button
               title="افزودن پلان"
               color="#841584"
-              // onPress={() => {
-              //   //setOpenAddPan(true);
-              // }}
               onPress={() => {
-                Navigation.push(props.componentId, {
-                  component: {
-                    name: 'AddPlanSceen',
-                    options: {
-                      topBar: {
-                        title: {
-                          text: 'AddPlanSceen',
-                        },
-                      },
-                    },
-                  },
-                });
+                setOpenAddPan(true);
               }}
+              // onPress={() => {
+              //   navigation.navigate('AddPlanSceen', 'AddPlanSce');
+              //   // Navigation.push(props.componentId, {
+              //   //   component: {
+              //   //     name: 'AddPlanSceen',
+              //   //     options: {
+              //   //       topBar: {
+              //   //         title: {
+              //   //           text: 'AddPlanSceen',
+              //   //         },
+              //   //       },
+              //   //     },
+              //   //   },
+              //   // });
+              // }}
             />
 
-            {/* <AddPlanDialog
+            <AddPlanDialog
               open={openAddPlan}
               onClose={() => {
                 setOpenAddPan(false);
                 refrshList();
-              }}>
-              sdsdss
-            </AddPlanDialog> */}
+              }}></AddPlanDialog>
           </View>
           <View>
             <Text
