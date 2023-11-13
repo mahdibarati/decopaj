@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {useEffect} from 'react';
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {colors} from './colors';
 import {deleteData, getStoreData} from './db';
 import {
@@ -15,7 +15,6 @@ import {
   GluestackUIProvider,
   RemoveIcon,
   ScrollView,
-  Text,
   TrashIcon,
 } from '@gluestack-ui/themed';
 import {getPersianDigitString} from './utils';
@@ -23,6 +22,8 @@ import {AddPlanDialog} from './add-plan-dialog';
 import {config} from '@gluestack-ui/config';
 import {Alert} from 'react-native';
 import {DeleteIcon} from 'lucide-react-native';
+import Text from '../common/text';
+import LinearGradient from 'react-native-linear-gradient';
 
 export const DecopajScreen = (props: {
   navigation: any;
@@ -53,15 +54,20 @@ export const DecopajScreen = (props: {
         return (
           <Box
             key={'p-' + index}
-            style={{position: 'relative', paddingTop: 4, marginTop: 4}}>
+            style={{
+              position: 'relative',
+              paddingTop: 4,
+              marginTop: 4,
+            }}>
             <Box
               style={{
                 // maxWidth: 'fit-content',
                 margin: 2,
                 // ViewShadow: 'none',
-                borderColor: colors.primary,
+                borderColor: 'transparent',
                 borderWidth: 1,
                 borderRadius: 8,
+                backgroundColor: 'rgba(255,255,255,0.6)',
               }}>
               <View>
                 <Box paddingHorizontal={8} paddingVertical={16} gap={5}>
@@ -71,21 +77,23 @@ export const DecopajScreen = (props: {
                     flexDirection="row"
                     mt={1}
                     gap={3}>
-                    <Text style={{color: colors.text, fontWeight: 'bold'}}>
+                    <Text
+                      isBold
+                      style={{
+                        color: colors.text,
+                      }}>
                       {getPersianDigitString(item.cameraTypeName)}
                     </Text>
                     <Text style={{color: colors.text}}>نوع دوربین</Text>
                   </Box>
-                  <Divider />
+                  <Divider bg="black" />
                   <Box
                     display="flex"
                     justifyContent="space-between"
                     flexDirection="row"
                     mt={1}
                     gap={13}>
-                    <Text style={{color: colors.text, fontWeight: 'bold'}}>
-                      {getPersianDigitString(item.count)}
-                    </Text>
+                    <Text isBold>{getPersianDigitString(item.count)}</Text>
                     <Text style={{color: colors.text}}>تعداد بازیگر</Text>
                   </Box>
                   <Button
@@ -106,6 +114,8 @@ export const DecopajScreen = (props: {
               </View>
             </Box>
             <Text
+              iswhite
+              fontSize={14}
               style={{
                 position: 'absolute',
                 left: 8,
@@ -114,8 +124,7 @@ export const DecopajScreen = (props: {
                 // border: '1px solid #aaa',
                 backgroundColor: colors.primary,
                 width: 30,
-                height: 17,
-                color: 'white',
+                height: 20,
                 textAlign: 'center',
               }}>
               {getPersianDigitString(index + 1)}
@@ -128,10 +137,17 @@ export const DecopajScreen = (props: {
 
   return (
     <GluestackUIProvider config={config}>
-      <View style={{padding: 8, height: '100%'}}>
-        <View>
+      <LinearGradient
+        colors={['#cc2b5e', '#753a88']}
+        style={styles.linearGradient}>
+        <View
+          style={{
+            padding: 8,
+            height: '100%',
+          }}>
           <View>
-            {/* <Button
+            <View>
+              {/* <Button
               borderRadius="$full"
               size="lg"
               p="$3.5"
@@ -158,48 +174,69 @@ export const DecopajScreen = (props: {
               //   // });
               // }}
             >
-               <ButtonText>افزودن پلان</ButtonText> 
+               <ButtonText>افزودن پلان</ButtonText>
               <ButtonIcon as={AddIcon} color="blue" size="md" />
             </Button> */}
 
-            <AddPlanDialog
-              open={openAddPlan}
-              onClose={() => {
-                setOpenAddPan(false);
-                refrshList();
-              }}></AddPlanDialog>
-          </View>
-          <ScrollView>
-            <View>
-              <Text
-                style={{
-                  backgroundColor: colors.secondary,
-                  color: 'white',
-                  marginTop: 10,
-                  padding: 8,
-                }}>
-                لیست پلان ها
-              </Text>
-              <View>{getList()}</View>
+              <AddPlanDialog
+                open={openAddPlan}
+                onClose={() => {
+                  setOpenAddPan(false);
+                  refrshList();
+                }}></AddPlanDialog>
             </View>
-          </ScrollView>
+            <ScrollView>
+              <View>
+                <Text
+                  iswhite
+                  isBold
+                  style={{
+                    backgroundColor: colors.secondary,
+                    marginTop: 10,
+                    padding: 8,
+                  }}>
+                  لیست پلان ها
+                </Text>
+                <View>{getList()}</View>
+              </View>
+            </ScrollView>
+          </View>
+          <Button
+            borderRadius="$full"
+            size="lg"
+            //  p="$3.5"
+            position="absolute"
+            bottom={10}
+            right={10}
+            bg={colors.primary}
+            onPress={() => {
+              setOpenAddPan(true);
+            }}>
+            {/* EditIcon is imported from 'lucide-react-native' */}
+            <ButtonText marginRight={10} fontFamily="IRANYekanWebBold">
+              افزودن پلان
+            </ButtonText>
+            <ButtonIcon as={AddIcon} />
+          </Button>
         </View>
-        <Button
-          borderRadius="$full"
-          size="lg"
-          //  p="$3.5"
-          position="absolute"
-          bottom={10}
-          right={10}
-          bg={colors.primary}
-          onPress={() => {
-            setOpenAddPan(true);
-          }}>
-          {/* EditIcon is imported from 'lucide-react-native' */}
-          <ButtonText marginRight={10}>افزودن پلان</ButtonText>
-          <ButtonIcon as={AddIcon} />
-        </Button>
-      </View>
+      </LinearGradient>
     </GluestackUIProvider>
   );
 };
+
+var styles = StyleSheet.create({
+  linearGradient: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderRadius: 5,
+  },
+  buttonText: {
+    fontSize: 18,
+    fontFamily: 'Gill Sans',
+    textAlign: 'center',
+    margin: 10,
+    color: '#ffffff',
+    backgroundColor: 'transparent',
+  },
+});

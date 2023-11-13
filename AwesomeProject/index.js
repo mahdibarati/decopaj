@@ -6,7 +6,6 @@ import {AppRegistry} from 'react-native';
 import App from './App';
 import {name as appName} from './app.json';
 import {Navigation} from 'react-native-navigation';
-import {AddPlanSceen} from './src/decopaj/add-plan-screen';
 import {DecopajScreen} from './src/decopaj/decopaj';
 
 AppRegistry.registerComponent(appName, () => App);
@@ -28,7 +27,7 @@ Navigation.events().registerAppLaunchedListener(() => {
                     text: 'دکوپاژ',
                     alignment: 'center',
                     fontWeight: 'bold',
-                    fontFamily: 'bKoodak',
+                    fontFamily: 'IRANYekanWebBold',
                   },
                 },
               },

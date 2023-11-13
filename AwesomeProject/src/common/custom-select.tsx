@@ -1,23 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {
-  Box,
-  ChevronDownIcon,
-  Icon,
-  Select,
-  SelectBackdrop,
-  SelectContent,
-  SelectDragIndicator,
-  SelectDragIndicatorWrapper,
-  SelectIcon,
-  SelectInput,
-  SelectItem,
-  SelectPortal,
-  SelectTrigger,
-  Text,
-} from '@gluestack-ui/themed';
+import {Box} from '@gluestack-ui/themed';
 import {getPersianString} from '../decopaj/utils';
 import {colors} from '../decopaj/colors';
+import Text from './text';
 
 export const CustomSelect = (props: {
   onValueChange?: any;
@@ -54,7 +40,7 @@ export const CustomSelect = (props: {
                 setSelected(item);
                 props.onValueChange(item);
               }}>
-              <Text color={selected === item ? 'white' : '#999'}>
+              <Text fontSize={14} iswhite={selected === item}>
                 {getPersianString(item)}
               </Text>
             </Box>

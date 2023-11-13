@@ -1,18 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {Alert, Button, Pressable, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Navigation, Modal as RNNModal} from 'react-native-navigation';
-import {Box, Divider} from '@gluestack-ui/themed';
+import {Box, Button, ButtonText} from '@gluestack-ui/themed';
 import {CustomSelect} from '../common/custom-select';
-import {CameraType, getCameraType} from './model';
+import {CameraType, getCameraType, getCameraTypeValue} from './model';
 import {addData} from './db';
 import {guid} from './utils';
-import {Text} from 'react-native-svg';
-import {Modal} from 'react-native';
 
 export const AddPlanDialog = props => {
   const [cameraType, setCameraType] = useState(1);
-  const [cameraTypeName, setCameraTypeName] = useState('1');
+  const [cameraTypeName, setCameraTypeName] = useState(getCameraTypeValue(1));
   const [count, setCount] = useState('1');
 
   return (
@@ -65,7 +63,6 @@ export const AddPlanDialog = props => {
               </Box>
               <View>
                 <Button
-                  title="ثبت"
                   onPress={() => {
                     // saveData({
                     //   cameraTypeName: cameraTypeName,
@@ -83,8 +80,11 @@ export const AddPlanDialog = props => {
                       props.onClose();
                       Navigation.popToRoot(props.componentId, {});
                     });
-                  }}
-                />
+                  }}>
+                  <ButtonText marginRight={10} fontFamily="IRANYekanWebBold">
+                    ثبت
+                  </ButtonText>
+                </Button>
               </View>
             </Box>
           </Box>
