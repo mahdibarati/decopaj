@@ -5,6 +5,7 @@ export enum CameraType {
   MediumCloseUp = 'نزدیک متوسط',
   CloseUp = 'نزدیک',
   ExtremeCloseUp = 'خیلی نزدیک',
+  Insert = 'اینسرت',
 }
 
 export const getCameraType = (name: string) => {
@@ -21,6 +22,8 @@ export const getCameraType = (name: string) => {
       return 5;
     case 'خیلی نزدیک':
       return 6;
+    case 'اینسرت':
+      return 7;
     default:
       return 0;
   }
@@ -34,12 +37,13 @@ export const getCameraTypeValue = (name: number) => {
       return CameraType.LongShot;
     case 3:
       return CameraType.MediumShot;
-
     case 4:
       return CameraType.MediumCloseUp;
     case 5:
       return CameraType.CloseUp;
     case 6:
       return CameraType.ExtremeCloseUp;
+    case 7:
+      return CameraType.Insert;
   }
 };

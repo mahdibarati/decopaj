@@ -29,6 +29,7 @@ Navigation.events().registerAppLaunchedListener(() => {
                     fontWeight: 'bold',
                     fontFamily: 'IRANYekanWebBold',
                   },
+                  visible: false,
                 },
               },
             },

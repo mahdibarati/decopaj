@@ -54,6 +54,7 @@ export const DecopajScreen = (props: {
         return (
           <Box
             key={'p-' + index}
+            width="50%"
             style={{
               position: 'relative',
               paddingTop: 4,
@@ -67,7 +68,7 @@ export const DecopajScreen = (props: {
                 borderColor: 'transparent',
                 borderWidth: 1,
                 borderRadius: 8,
-                backgroundColor: 'rgba(255,255,255,0.6)',
+                backgroundColor: 'rgba(255,255,255,0.5)',
               }}>
               <View>
                 <Box paddingHorizontal={8} paddingVertical={16} gap={5}>
@@ -99,7 +100,7 @@ export const DecopajScreen = (props: {
                   <Button
                     borderRadius="$full"
                     size="md"
-                    bg={colors.error}
+                    bg={'transparent'}
                     width={10}
                     onPress={() => {
                       //deletePlan(index);
@@ -108,7 +109,7 @@ export const DecopajScreen = (props: {
                       });
                     }}>
                     {/* EditIcon is imported from 'lucide-react-native' */}
-                    <ButtonIcon as={TrashIcon} />
+                    <ButtonIcon as={TrashIcon} color={colors.error} />
                   </Button>
                 </Box>
               </View>
@@ -138,66 +139,43 @@ export const DecopajScreen = (props: {
   return (
     <GluestackUIProvider config={config}>
       <LinearGradient
-        colors={['#cc2b5e', '#753a88']}
+        colors={['#ED1E79', '#662D8C']}
         style={styles.linearGradient}>
         <View
           style={{
-            padding: 8,
+            padding: 0,
             height: '100%',
           }}>
           <View>
+            <AddPlanDialog
+              open={openAddPlan}
+              onClose={() => {
+                setOpenAddPan(false);
+                refrshList();
+              }}></AddPlanDialog>
             <View>
-              {/* <Button
-              borderRadius="$full"
-              size="lg"
-              p="$3.5"
-              bg="red"
-              borderColor="blue"
-              height={20}
-              width={20}
-              onPress={() => {
-                setOpenAddPan(true);
-              }}
-              // onPress={() => {
-              //   navigation.navigate('AddPlanSceen', 'AddPlanSce');
-              //   // Navigation.push(props.componentId, {
-              //   //   component: {
-              //   //     name: 'AddPlanSceen',
-              //   //     options: {
-              //   //       topBar: {
-              //   //         title: {
-              //   //           text: 'AddPlanSceen',
-              //   //         },
-              //   //       },
-              //   //     },
-              //   //   },
-              //   // });
-              // }}
-            >
-               <ButtonText>افزودن پلان</ButtonText>
-              <ButtonIcon as={AddIcon} color="blue" size="md" />
-            </Button> */}
-
-              <AddPlanDialog
-                open={openAddPlan}
-                onClose={() => {
-                  setOpenAddPan(false);
-                  refrshList();
-                }}></AddPlanDialog>
+              <Text
+                iswhite
+                isBold
+                borderRadius={4}
+                style={{
+                  backgroundColor: colors.secondary,
+                  marginTop: 10,
+                  padding: 8,
+                }}>
+                لیست پلان ها
+              </Text>
             </View>
             <ScrollView>
               <View>
-                <Text
-                  iswhite
-                  isBold
-                  style={{
-                    backgroundColor: colors.secondary,
-                    marginTop: 10,
-                    padding: 8,
-                  }}>
-                  لیست پلان ها
-                </Text>
-                <View>{getList()}</View>
+                <Box
+                  flex={1}
+                  flexDirection="row"
+                  flexWrap="wrap"
+                  alignItems="flex-end"
+                  direction="rtl">
+                  {getList()}
+                </Box>
               </View>
             </ScrollView>
           </View>
@@ -229,7 +207,6 @@ var styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 15,
     paddingRight: 15,
-    borderRadius: 5,
   },
   buttonText: {
     fontSize: 18,

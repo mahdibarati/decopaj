@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Box} from '@gluestack-ui/themed';
 import {getPersianString} from '../decopaj/utils';
 import {colors} from '../decopaj/colors';
@@ -9,8 +9,14 @@ export const CustomSelect = (props: {
   onValueChange?: any;
   list: string[];
   label: string;
+  value?: string;
 }) => {
   const [selected, setSelected] = useState('');
+  useEffect(() => {
+    if (props.value) {
+      setSelected(props.value);
+    }
+  }, [props.value]);
   return (
     <Box display="flex" flexDirection="row" width={'100%'} style={{}}>
       <Box
