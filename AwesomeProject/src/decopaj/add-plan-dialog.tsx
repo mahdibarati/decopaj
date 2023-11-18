@@ -1,20 +1,51 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Modal as RNNModal} from 'react-native-navigation';
-import {Box, Button, ButtonText} from '@gluestack-ui/themed';
+import {Box, Button, ButtonText, Text} from '@gluestack-ui/themed';
 import {CustomSelect} from '../common/custom-select';
-import {CameraType, getCameraType} from './model';
+import {CameraType, getCameraType, getCameraTypeValue} from './model';
 import {addData} from './db';
 import {guid} from './utils';
 import {colors} from './colors';
+import Canvas from 'react-native-canvas';
 
 export const AddPlanDialog = props => {
   const [cameraType, setCameraType] = useState<number | undefined>();
   const [cameraTypeName, setCameraTypeName] = useState<
     CameraType | undefined
   >();
-  const [count, setCount] = useState('1');
+  const [count, setCount] = useState(1);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      //@ts-ignore
+      const ctx = ref.current.getContext('2d');
+      if (ctx) {
+        //@ts-ignore
+        drawActor(ref.current, ctx, ref.current.width, ref.current.height);
+      }
+    }
+  }, [count]);
+
+  const drawActor = (canvas: any, ctx: any, width: number, height: number) => {
+    canvas.height = (width * 9) / 16;
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = 'red';
+    if (cameraType) {
+      if (getCameraTypeValue(cameraType) === CameraType.CloseUp) {
+        ctx.fillRect(20, 20, width - 40, (width * 9) / 16 - 40);
+      } else {
+        for (let i = 0; i < count; i++) {
+          ctx.fillRect(i * 50, 20, 20, 100);
+          //ctx.fillText(i.toString(), 20 + i * 50, 10);
+        }
+      }
+    }
+    ctx.restore();
+  };
 
   return (
     <RNNModal
@@ -24,26 +55,20 @@ export const AddPlanDialog = props => {
       visible={props.open}
       onRequestClose={() => {
         setCameraType(undefined);
-        setCount('1');
+        setCount(1);
         props.onClose();
       }}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Box style={{backgroundColor: 'white'}}>
-            {/* <DialogTitle sx={{m: 0, p: 2}} id="customized-dialog-title">
-          افزودن پلان
-        </DialogTitle>
-        <IconButton
-          aria-label="close"
-          onClick={props.onClose}
-          sx={{
-            position: 'absolute',
-            left: 8,
-            top: 8,
-            color: theme => theme.palette.grey[500],
-          }}>
-          <CloseIcon />
-        </IconButton> */}
+            <Canvas
+              ref={ref}
+              style={{
+                width: '100%',
+                height: '50%',
+              }}
+            />
+
             <Box p={10} gap={10}>
               <Box display="flex" flexDirection="row">
                 <CustomSelect
