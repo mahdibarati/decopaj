@@ -14,15 +14,15 @@ buildscript {
     repositories {
         // google()
         // mavenCentral()
-         maven {
+    maven {
         url 'https://maven.google.com/'
         name 'Google'
     }
     jcenter()
     google()
-    maven {
-        url 'https://mvnrepository.com/artifact/com.android.tools.lint/lint-gradle-api'
-    }
+    // maven {
+    //     url 'https://mvnrepository.com/artifact/com.android.tools.lint/lint-gradle-api'
+    // }
         
         
     }
