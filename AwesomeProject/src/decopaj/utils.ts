@@ -1,3 +1,5 @@
+import {CameraType} from './model';
+
 export const getCommaSeperatedNumber = (value: string) => {
   if (value)
     // if (isIOS) {
@@ -87,4 +89,20 @@ export const guid = () => {
       .substring(1);
   };
   return `${w()}${w()}-${w()}-${w()}-${w()}-${w()}${w()}${w()}`;
+};
+
+export const getImage = (cameraType?: CameraType) => {
+  if (cameraType) {
+    switch (cameraType) {
+      case CameraType.CloseUp:
+        return require('../images/1.png');
+      case CameraType.MediumShot:
+        return require('../images/2.png');
+      case CameraType.LongShot:
+        return require('../images/3.png');
+      case CameraType.ExtremeLongShot:
+        return require('../images/4.png');
+    }
+  }
+  return '';
 };

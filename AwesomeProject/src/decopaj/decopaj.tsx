@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import {colors} from './colors';
 import {deleteData, getStoreData} from './db';
 import {
@@ -17,13 +17,13 @@ import {
   ScrollView,
   TrashIcon,
 } from '@gluestack-ui/themed';
-import {getPersianDigitString} from './utils';
+import {getImage, getPersianDigitString} from './utils';
 import {AddPlanDialog} from './add-plan-dialog';
 import {config} from '@gluestack-ui/config';
 import {Alert} from 'react-native';
-import {DeleteIcon} from 'lucide-react-native';
 import Text from '../common/text';
 import LinearGradient from 'react-native-linear-gradient';
+import {getCameraType, getCameraTypeValue} from './model';
 
 export const DecopajScreen = (props: {
   navigation: any;
@@ -97,20 +97,39 @@ export const DecopajScreen = (props: {
                     <Text isBold>{getPersianDigitString(item.count)}</Text>
                     <Text style={{color: colors.text}}>تعداد بازیگر</Text>
                   </Box>
-                  <Button
-                    borderRadius="$full"
-                    size="md"
-                    bg={'transparent'}
-                    width={10}
-                    onPress={() => {
-                      //deletePlan(index);
-                      deleteData(item.id).then(() => {
-                        refrshList();
-                      });
-                    }}>
-                    {/* EditIcon is imported from 'lucide-react-native' */}
-                    <ButtonIcon as={TrashIcon} color={colors.error} />
-                  </Button>
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="space-between">
+                    <Button
+                      borderRadius="$full"
+                      size="md"
+                      bg={'transparent'}
+                      width={10}
+                      onPress={() => {
+                        //deletePlan(index);
+                        deleteData(item.id).then(() => {
+                          refrshList();
+                        });
+                      }}>
+                      {/* EditIcon is imported from 'lucide-react-native' */}
+                      <ButtonIcon as={TrashIcon} color={colors.error} />
+                    </Button>
+                    {getImage(item.cameraTypeName) && (
+                      <Image
+                        source={getImage(item.cameraTypeName)}
+                        style={{
+                          alignSelf: 'center',
+                          width: 35,
+                          height: 35,
+                          resizeMode: 'contain',
+                          borderWidth: 1,
+                          borderColor: '#757575',
+                          borderRadius: 5,
+                        }}
+                      />
+                    )}
+                  </Box>
                 </Box>
               </View>
             </Box>

@@ -1,12 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {Alert, StyleSheet, View} from 'react-native';
+import {Alert, Image, StyleSheet, View} from 'react-native';
 import {Modal as RNNModal} from 'react-native-navigation';
-import {Box, Button, ButtonText} from '@gluestack-ui/themed';
+import {Box, Button, ButtonText, Divider} from '@gluestack-ui/themed';
 import {CustomSelect} from '../common/custom-select';
 import {CameraType, getCameraType} from './model';
 import {addData} from './db';
-import {guid} from './utils';
+import {getImage, guid} from './utils';
 import {colors} from './colors';
 
 export const AddPlanDialog = props => {
@@ -30,7 +30,32 @@ export const AddPlanDialog = props => {
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Box style={{backgroundColor: 'white'}}>
-            <Box p={10} gap={10}>
+            {/* {getImage(cameraTypeName) && <img src={getImage(cameraTypeName)} />} */}
+            {/* <View
+              style={{
+                // flex: 1,
+                // justifyContent: 'center',
+                // alignItems: 'center',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'red',
+              }}> */}
+            <Image
+              source={getImage(cameraTypeName)}
+              style={{
+                alignSelf: 'center',
+                width: 100,
+                height: 100,
+                // aspectRatio: 1,
+                resizeMode: 'contain',
+                borderWidth: 1,
+                borderColor: '#757575',
+                borderRadius: 5,
+              }}
+            />
+            {/* </View> */}
+            <Box mt={5} bgColor="#555" height={1}></Box>
+            <Box gap={10}>
               <Box display="flex" flexDirection="row">
                 <CustomSelect
                   label="نوع دوربین"

@@ -29,7 +29,7 @@ export const getCameraType = (name: string) => {
   }
 };
 
-export const getCameraTypeValue = (name: number) => {
+export const c = (name: number) => {
   switch (name) {
     case 1:
       return CameraType.ExtremeLongShot;
