@@ -12,17 +12,17 @@ buildscript {
         ndkVersion = "23.1.7779620"
     }
     repositories {
-        // google()
-        // mavenCentral()
+      google()     
+      maven {
+          url 'https://maven.google.com/'
+          name 'Google'
+      }
+     //  mavenCentral()
+   // jcenter()
+    
     maven {
-        url 'https://maven.google.com/'
-        name 'Google'
+        url 'https://mvnrepository.com/artifact/com.android.tools.lint/lint-gradle-api'
     }
-    jcenter()
-    google()
-    // maven {
-    //     url 'https://mvnrepository.com/artifact/com.android.tools.lint/lint-gradle-api'
-    // }
         
         
     }
@@ -30,5 +30,5 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$RNNKotlinVersion"
         classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
-    }
+    }   
 }
