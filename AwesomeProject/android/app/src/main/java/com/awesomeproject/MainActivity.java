@@ -1,4 +1,4 @@
-package com.awesomeproject;
+package com.decopaj;
 
 import com.reactnativenavigation.NavigationActivity;
 import com.facebook.react.ReactActivityDelegate;
