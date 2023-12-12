@@ -13,16 +13,16 @@ buildscript {
     }
     repositories {
       google()     
-      maven {
-          url 'https://maven.google.com/'
-          name 'Google'
-      }
-     //  mavenCentral()
+      // maven {
+      //     url 'https://maven.google.com/'
+      //     name 'Google'
+      // }
+      mavenCentral()
    // jcenter()
     
-    maven {
-        url 'https://mvnrepository.com/artifact/com.android.tools.lint/lint-gradle-api'
-    }
+    // maven {
+    //     url 'https://mvnrepository.com/artifact/com.android.tools.lint/lint-gradle-api'
+    // }
         
         
     }
