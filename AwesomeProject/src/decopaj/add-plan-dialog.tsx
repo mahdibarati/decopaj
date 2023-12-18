@@ -40,19 +40,21 @@ export const AddPlanDialog = props => {
                 alignItems: 'center',
                 backgroundColor: 'red',
               }}> */}
-            <Image
-              source={getImage(cameraTypeName)}
-              style={{
-                alignSelf: 'center',
-                width: 100,
-                height: 100,
-                // aspectRatio: 1,
-                resizeMode: 'contain',
-                borderWidth: 1,
-                borderColor: '#757575',
-                borderRadius: 5,
-              }}
-            />
+            {getImage(cameraTypeName) && (
+              <Image
+                source={getImage(cameraTypeName)}
+                style={{
+                  alignSelf: 'center',
+                  width: 100,
+                  height: 100,
+                  // aspectRatio: 1,
+                  resizeMode: 'contain',
+                  borderWidth: 1,
+                  borderColor: '#757575',
+                  borderRadius: 5,
+                }}
+              />
+            )}
             {/* </View> */}
             <Box mt={5} bgColor="#555" height={1}></Box>
             <Box gap={10}>
